@@ -1,5 +1,5 @@
-### 30 aprriln 2025 tes template admin
-# Memeriksa template admin
+### 30 aprriln 2025 (coder) tes template admin
+# Memeriksa (coder 2) template admin
 # halaman login
 -fitur username
 -fitur login
@@ -21,4 +21,9 @@
 # halaman transaksi
 -input transaksi
 -data transaksi
+# memeriksa (coder 1) template user
+
+
+
+
 
