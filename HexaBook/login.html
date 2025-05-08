@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" href="css/login.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <canvas id="view"></canvas>
+  <div class="gradient-bg">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="gradients-container">
+      <div class="g1"></div>
+      <div class="g2"></div>
+      <div class="g3"></div>
+      <div class="g4"></div>
+      <div class="g5"></div>
+      <div class="interactive"></div>
+    </div>
+  </div>
+
+  <div class="box">
+  <div class="login">
+    <div class="loginBx">
+      <h2>
+        <i class="fa-solid fa-right-to-bracket"></i>
+        Login
+        <i class="fa-solid fa-left-to-bracket"></i>
+        </h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <input type="submit" value="Sign in" onclick="login()">
+      <div class="group">
+        <div class="group">
+          <a href="#"> Forgot Password </a>
+          <a href="#"> Sign up </a>
+        </div>
+  </div>
+</div>
+<div id="popup" class="popup"></div>
+<script>
+
+console.log("Login page loaded");
+console.log("Username input:", document.getElementById("username"));
+console.log("Password input:", document.getElementById("password"));
+
+function login() {
+  console.log("Login button clicked");
+  const correctUsername = "Bukuuu";
+  const correctPassword = "12345";
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  console.log("Username:", username);
+  console.log("Password:", password);
+
+  if (username === correctUsername && password === correctPassword) {
+    console.log("Login successful");
+    showPopup("Login Berhasil!", "success");
+    setTimeout(() => { window.location.href = "index.html"; }, 1500);
+  } else {
+    console.log("Login failed");
+    showPopup("Username atau Password salah. Coba lagi!", "error");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM content loaded");
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+
+  [usernameInput, passwordInput].forEach(input => {
+    input.addEventListener("keydown", function (event) {
+      console.log("Key pressed:", event.key);
+      if (event.key === "Enter") {
+        console.log("Enter key pressed");
+        event.preventDefault(); // Hindari submit form default jika ada
+        login(); // Panggil fungsi login()
+      }
+    });
+  });
+});
+
+  function showPopup(message, type = "success") {
+    const popup = document.getElementById("popup");
+    popup.textContent = message;
+    popup.className = "popup " + (type === "error" ? "error" : "success");
+    popup.style.display = "block";
+    setTimeout(() => { popup.style.display = "none"; }, 3000);
+  }
+
+  function login() {
+    const correctUsername = "Bukuuu";
+    const correctPassword = "12345";
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (username === correctUsername && password === correctPassword) {
+      showPopup("Login Berhasil!", "success");
+      setTimeout(() => { window.location.href = "index.html"; }, 1500);
+    } else {
+      showPopup("Username atau Password salah. Coba lagi!", "error");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+
+    [usernameInput, passwordInput].forEach(input => {
+      input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault(); // Hindari submit form default jika ada
+          login(); // Panggil fungsi login()
+        }
+      });
+    });
+  });
+
+  class Particle {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.size = Math.random() * 2 + 1;
+      this.speedX = Math.random() * 3 - 1.5;
+      this.speedY = Math.random() * 3 - 1.5;
+      this.color = 'rgba(255, 255, 255, 0.8)';
+    }
+    
+    randomColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return `rgba(${r}, ${g}, ${b}, 0.8)`; // RGBA format with alpha 0.8
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.size > 0.2) this.size -= 0.1;
+    }
+
+    draw(ctx) {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  const canvas = document.getElementById('view');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particlesArray = [];
+
+  function handleParticles() {
+    for (let i = 0; i < particlesArray.length; i++) {
+      particlesArray[i].update();
+      particlesArray[i].draw(ctx);
+
+      for (let j = i; j < particlesArray.length; j++) {
+        const dx = particlesArray[i].x - particlesArray[j].x;
+        const dy = particlesArray[i].y - particlesArray[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 100) {
+          ctx.beginPath();
+          ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+          ctx.lineWidth = 0.2;
+          ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+          ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+          ctx.stroke();
+        }
+      }
+
+      if (particlesArray[i].size <= 0.3) {
+        particlesArray.splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    handleParticles();
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    for (let i = 0; i < 5; i++) {
+      particlesArray.push(new Particle(e.x, e.y));
+    }
+  });
+
+  animate();
+</script>
+</body>
+</html>
