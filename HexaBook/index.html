@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daftar Buku Populer</title>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+  <div class="gradient-bg">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="gradients-container">
+      <div class="g1"></div>
+      <div class="g2"></div>
+      <div class="g3"></div>
+      <div class="g4"></div>
+      <div class="g5"></div>
+      <div class="interactive"></div>
+    </div>
+  </div>
+  
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+  
+  <canvas id="view"></canvas>
+  
+<nav class="navbar">
+  <div class="nav-brand">HexaBook</div>
+  <button class="nav-toggle" id="navToggle">&#9776;</button>
+  <div class="nav-menu" id="navMenu">
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="list.html">List Buku</a>
+    <a href="about.html">About</a>
+  </div>
+</nav>
+
+<section style="text-align:center; margin-top: 80px; padding: 40px 20px;">
+  <h1 style="bottom: 70px; font-weight: bold; font-size: 86px; color: #ffffff;" class="glitch-text" data-text="Buku Populer!">  </h1>
+</section>
+
+<div class="container" id="books-container"></div>
+
+<div id="pagination"></div>
+<script>
+  const glitchText = document.querySelector('.glitch-text');
+
+    setInterval(() => {
+      glitchText.classList.add('glitch-animate');
+      setTimeout(() => {
+        glitchText.classList.remove('glitch-animate');
+      }, 250); 
+
+      setTimeout(() => {
+        glitchText.classList.add('glitch-animate');
+        setTimeout(() => {
+          glitchText.classList.remove('glitch-animate');
+        }, 250); 
+      }, 500);
+
+    }, 3000); 
+
+  document.getElementById("navToggle").addEventListener("click", function () {
+    document.getElementById("navMenu").classList.toggle("active");
+  });
+
+
+  let books = [];
+  let filteredBooks = [];
+  let currentPage = 1;
+  const booksPerPage = 8;
+
+  async function fetchBooks() {
+    const loader = document.getElementById('loader');
+    loader.style.display = 'flex';
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/api/popular-books');
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        books = data.books;
+        filteredBooks = books;
+        displayBooks(currentPage);
+        displayPagination();
+      }
+    } catch (error) {
+      console.error('Gagal memuat buku:', error);
+    } finally {
+      loader.style.display = 'none';
+    }
+  }
+
+  function displayBooks(page) {
+    const container = document.getElementById('books-container');
+    container.innerHTML = '';
+
+    const start = (page - 1) * booksPerPage;
+    const end = start + booksPerPage;
+    const bookList = filteredBooks.slice(start, end);
+
+    if (bookList.length > 0) {
+      bookList.forEach(book => {
+        const card = document.createElement('div');
+        card.className = 'book-card';
+        card.innerHTML = `
+          <img src="${book.image}" alt="Cover Buku">
+          <h3>${book.title}</h3>
+          <p>${book.authors}</p>
+          <a href="detail.html?id=${book.id}" target="_blank">Lihat Buku</a>
+        `;
+        container.appendChild(card);
+      });
+    } else {
+      container.innerHTML = '<h2 style="text-align:center;">Buku tidak ditemukan</h2>';
+    }
+  }
+
+  function displayPagination() {
+    const pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+
+    const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+
+    const prevButton = document.createElement('button');
+    prevButton.textContent = 'Prev';
+    prevButton.disabled = (currentPage === 1);
+    prevButton.onclick = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        displayBooks(currentPage);
+        displayPagination();
+      }
+    };
+    pagination.appendChild(prevButton);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      if (i === currentPage) btn.classList.add('active');
+      btn.onclick = () => {
+        currentPage = i;
+        displayBooks(currentPage);
+        displayPagination();
+      };
+      pagination.appendChild(btn);
+    }
+
+    const nextButton = document.createElement('button');
+    nextButton.textContent = 'Next';
+    nextButton.disabled = (currentPage === totalPages);
+    nextButton.onclick = () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        displayBooks(currentPage);
+        displayPagination();
+      }
+    };
+    pagination.appendChild(nextButton);
+  }
+
+  function searchBooks() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    filteredBooks = books.filter(book =>
+      book.title.toLowerCase().includes(searchTerm) ||
+      book.authors.toLowerCase().includes(searchTerm)
+    );
+    currentPage = 1;
+    displayBooks(currentPage);
+    displayPagination();
+  }
+
+  fetchBooks();
+
+  class Particle {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.size = Math.random() * 2 + 1;
+      this.speedX = Math.random() * 3 - 1.5;
+      this.speedY = Math.random() * 3 - 1.5;
+      this.color = 'rgba(255, 255, 255, 0.8)';
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.size > 0.2) this.size -= 0.1;
+    }
+
+    draw(ctx) {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  const canvas = document.getElementById('view');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particlesArray = [];
+
+  function handleParticles() {
+    for (let i = 0; i < particlesArray.length; i++) {
+      particlesArray[i].update();
+      particlesArray[i].draw(ctx);
+
+      for (let j = i; j < particlesArray.length; j++) {
+        const dx = particlesArray[i].x - particlesArray[j].x;
+        const dy = particlesArray[i].y - particlesArray[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 100) {
+          ctx.beginPath();
+          ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+          ctx.lineWidth = 0.2;
+          ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+          ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+          ctx.stroke();
+        }
+      }
+
+      if (particlesArray[i].size <= 0.3) {
+        particlesArray.splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    handleParticles();
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    for (let i = 0; i < 5; i++) {
+      particlesArray.push(new Particle(e.x, e.y));
+    }
+  });
+
+  animate();
+</script>
+
+</body>
+</html>
