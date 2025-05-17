@@ -1,0 +1,488 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+@import url("https://use.fontawesome.com/releases/v6.5.1/css/all.css");
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('images/bg.jpg') no-repeat center center/cover;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.box {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  filter: drop-shadow(0 15px 50px #000);
+  border-radius: 20px;
+  animation: rotating 4s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  box-shadow: 0 0 10px #ff75f1, 0 0 30px #ff75f1;
+}
+
+@keyframes rotating {
+  0% { --a: 0deg; }
+  100% { --a: 360deg; }
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 15px 50px #000);
+  border-radius: 20px;
+  animation: rotating 4s linear infinite;
+  animation-delay: -1s;
+  box-shadow: 0 0 10px #45f3ff;
+}
+
+.box::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: #2d2d3949;
+  border-radius: 15px;
+  border: 8px solid #25252b5d;
+}
+
+.box:hover {
+  width: 450px;
+  height: 500px;
+}
+
+.box:hover .login {
+  inset: 40px;
+}
+
+.box:hover .loginBx {
+  transform: translateY(0px);
+}
+
+.login {
+  position: absolute;
+  inset: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  background: #00000033;
+  color: #fff;
+  z-index: 1000;
+  box-shadow: inset 0 10px 20px #00000080;
+  border-bottom: 2px solid #ffffff80;
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.loginBx {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  width: 70%;
+  transform: translateY(126px);
+  transition: 0.5s;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+h2 i {
+  color: #fa70dc;
+  text-shadow: 0 0 5px #ff75f1, 0 0 20px #ff75f1;
+}
+
+input {
+  width: 100%;
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+  font-size: 1em;
+  color: #fff;
+  background: #0000001a;
+  border: 2px solid #fff;
+  border-radius: 30px;
+}
+
+input::placeholder {
+  color: #999;
+}
+
+input[type="submit"] {
+  background: #45f3ff;
+  border: none;
+  font-weight: 500;
+  color: #111;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+input[type="submit"]:hover {
+  box-shadow: 0 0 10px #45f3ff, 0 0 60px #45f3ff;
+}
+
+.group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.group a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.group a:nth-child(2) {
+  color: #ff80ce;
+  font-weight: 600;
+}
+
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #45f3ff;
+  color: #111;
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #45f3ff, 0 0 20px #45f3ff;
+  font-weight: bold;
+  display: none;
+  z-index: 9999;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.popup.error {
+  background: #ff4d4d;
+  box-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff4d4d;
+}
+
+@keyframes fadein {
+  from { opacity: 0; top: 0; }
+  to { opacity: 1; top: 20px; }
+}
+
+@keyframes fadeout {
+  from { opacity: 1; top: 20px; }
+  to { opacity: 0; top: 0; }
+}
+
+canvas#view {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    :root {
+      --color-bg1: rgb(108, 0, 162);
+      --color-bg2: rgb(0, 17, 82);
+      --color1: 18, 113, 255;
+      --color2: 221, 74, 255;
+      --color3: 100, 220, 255;
+      --color4: 200, 50, 50;
+      --color5: 180, 180, 50;
+      --color-interactive: 140, 100, 255;
+      --circle-size: 80%;
+      --blending: hard-light;
+    }
+
+    @keyframes moveInCircle {
+      0% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes moveVertical {
+      0% {
+        transform: translateY(-50%);
+      }
+      50% {
+        transform: translateY(50%);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+    @keyframes moveHorizontal {
+      0% {
+        transform: translateX(-50%) translateY(-10%);
+      }
+      50% {
+        transform: translateX(50%) translateY(10%);
+      }
+      100% {
+        transform: translateX(-50%) translateY(-10%);
+      }
+    }
+    .gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+    }
+
+    .gradient-bg svg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+    }
+    .gradient-bg .gradients-container {
+      filter: url(#goo) blur(40px);
+      width: 100%;
+      height: 100%;
+    }
+    .gradient-bg .g1 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: center center;
+      animation: moveVertical 30s ease infinite;
+      opacity: 1;
+    }
+    .gradient-bg .g2 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: calc(50% - 400px);
+      animation: moveInCircle 20s reverse infinite;
+      opacity: 1;
+    }
+    .gradient-bg .g3 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2 + 200px);
+      left: calc(50% - var(--circle-size) / 2 - 500px);
+      transform-origin: calc(50% + 400px);
+      animation: moveInCircle 40s linear infinite;
+      opacity: 1;
+    }
+    .gradient-bg .g4 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: calc(50% - 200px);
+      animation: moveHorizontal 40s ease infinite;
+      opacity: 0.7;
+    }
+    .gradient-bg .g5 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: calc(var(--circle-size) * 2);
+      height: calc(var(--circle-size) * 2);
+      top: calc(50% - var(--circle-size));
+      left: calc(50% - var(--circle-size));
+      transform-origin: calc(50% - 800px) calc(50% + 200px);
+      animation: moveInCircle 20s ease infinite;
+      opacity: 1;
+    }
+    .gradient-bg .interactive {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: 100%;
+      height: 100%;
+      top: -50%;
+      left: -50%;
+      opacity: 0.7;
+    }
+
+    :root {
+      --color-bg1: rgb(108, 0, 162);
+      --color-bg2: rgb(0, 17, 82);
+      --color1: 18, 113, 255;
+      --color2: 221, 74, 255;
+      --color3: 100, 220, 255;
+      --color4: 200, 50, 50;
+      --color5: 180, 180, 50;
+      --color-interactive: 140, 100, 255;
+      --circle-size: 80%;
+      --blending: hard-light;
+    }
+
+    @keyframes moveInCircle {
+      0% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes moveVertical {
+      0% {
+        transform: translateY(-50%);
+      }
+      50% {
+        transform: translateY(50%);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+    @keyframes moveHorizontal {
+      0% {
+        transform: translateX(-50%) translateY(-10%);
+      }
+      50% {
+        transform: translateX(50%) translateY(10%);
+      }
+      100% {
+        transform: translateX(-50%) translateY(-10%);
+      }
+    }
+    .gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+    }
+
+    .gradient-bg svg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+    }
+    .gradient-bg .gradients-container {
+      filter: url(#goo) blur(40px);
+      width: 100%;
+      height: 100%;
+    }
+    .gradient-bg .g1 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: center center;
+      animation: moveVertical 30s ease infinite;
+      opacity: 1;
+    }
+    .gradient-bg .g2 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: calc(50% - 400px);
+      animation: moveInCircle 20s reverse infinite;
+      opacity: 1;
+    }
+    .gradient-bg .g3 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2 + 200px);
+      left: calc(50% - var(--circle-size) / 2 - 500px);
+      transform-origin: calc(50% + 400px);
+      animation: moveInCircle 40s linear infinite;
+      opacity: 1;
+    }
+    .gradient-bg .g4 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: var(--circle-size);
+      height: var(--circle-size);
+      top: calc(50% - var(--circle-size) / 2);
+      left: calc(50% - var(--circle-size) / 2);
+      transform-origin: calc(50% - 200px);
+      animation: moveHorizontal 40s ease infinite;
+      opacity: 0.7;
+    }
+    .gradient-bg .g5 {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: calc(var(--circle-size) * 2);
+      height: calc(var(--circle-size) * 2);
+      top: calc(50% - var(--circle-size));
+      left: calc(50% - var(--circle-size));
+      transform-origin: calc(50% - 800px) calc(50% + 200px);
+      animation: moveInCircle 20s ease infinite;
+      opacity: 1;
+    }
+    .gradient-bg .interactive {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+      mix-blend-mode: var(--blending);
+      width: 100%;
+      height: 100%;
+      top: -50%;
+      left: -50%;
+      opacity: 0.7;
+    }
+
+    canvas#view {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
