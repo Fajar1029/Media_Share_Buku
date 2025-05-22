@@ -1,5 +1,5 @@
 ### 📚 Deskripsi Website Baca Buku Digital
-# BacaBuku.ID adalah sebuah platform digital interaktif yang memungkinkan pengguna untuk **membaca, mencari, dan mengunduh buku secara online** dengan tampilan modern dan mudah digunakan. Website ini dirancang untuk memberikan pengalaman membaca yang nyaman dan efisien bagi pelajar, mahasiswa, dan pembaca umum.
+BacaBuku.ID adalah sebuah platform digital interaktif yang memungkinkan pengguna untuk **membaca, mencari, dan mengunduh buku secara online** dengan tampilan modern dan mudah digunakan. Website ini dirancang untuk memberikan pengalaman membaca yang nyaman dan efisien bagi pelajar, mahasiswa, dan pembaca umum.
 # Fitur Utama:
 - 📖 Baca Buku Online
    Pengguna dapat membaca buku langsung di dalam website melalui tampilan yang responsif dan mendukung berbagai ukuran layar.
