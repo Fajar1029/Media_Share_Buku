@@ -48,4 +48,14 @@
 - forget password
 - pagination dalam halaman list buku
 
+### 23 mei 2025
+# Fitur About
+- berfungsi dengan baik 
+- beberapa foto dri tim yang sebelumnya tidak ada sudah di tambahkan
+# navbar
+- di bagian navbar ada perubahan yaitu login di ubah menjadi tombol logout dan di ubah posisinya yang awalnya di samping home menjadi di sebelah about
+
+
+
+
 
