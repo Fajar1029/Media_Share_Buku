@@ -36,3 +36,5 @@
 
 # About
 - horizontal image carousel(foto kami)
+
+# Logout
