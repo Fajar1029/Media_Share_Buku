@@ -1,0 +1,2 @@
+const canvas=document.getElementById('view');const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+window.addEventListener('mousemove',e=>{ctx.fillStyle='white';ctx.beginPath();ctx.arc(e.clientX,e.clientY,5,0,Math.PI*2);ctx.fill();});
