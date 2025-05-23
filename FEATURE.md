@@ -38,3 +38,5 @@
 - horizontal image carousel(foto kami)
 
 # Logout
+# About
+- menambahkan foto (aril,Amel,Andre,frazin)
